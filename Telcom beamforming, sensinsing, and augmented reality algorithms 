@@ -1,0 +1,291 @@
+Methods and algorithms used in telecommunications dual purpose scenarios 
+
+### Part I: AI-Based Beam Management and Sensing in mmWave Communications
+
+1. **Deep Learning Based Beam Alignment**
+   - **Method Description**: A two-sided deep learning scheme for initial access joint beam alignment, replacing codebook-based methods. UE uses a recursive RNN for sensing vectors and state updates; NW uses FNN for final beamforming. Trained end-to-end to maximize beamforming gain after T-1 sensing steps. Variants: C1 (UE-only trainable), C2 (add NW FNN), C3 (add trainable NW codebook).
+   - **Key Equations**:
+     - Received signal: \( y_t = \mathbf{w}_t^H \mathbf{H} \mathbf{f}_t + \mathbf{w}_t^H \mathbf{n}_t \), where \( y_t \) is received symbol, \( \mathbf{H} \) is channel matrix, \( \mathbf{w}_t \) is combining vector, \( \mathbf{f}_t \) is beamforming vector, \( \mathbf{n}_t \sim \mathcal{CN}(0, \sigma_n^2 \mathbf{I}) \).
+     - SNR: \( \text{SNR} = \frac{\|\mathbf{w}_t^H \mathbf{H} \mathbf{f}_t\|^2}{\|\mathbf{w}_t^H \mathbf{n}_t\|^2} \).
+     - Optimization: \( \max_{\theta_1,\theta_2,\theta_3,\theta_4} \frac{\|\mathbf{w}_{T-1}^H \mathbf{H} \mathbf{f}_{T-1}\|^2}{\|\mathbf{H}\|^2} \), subject to RNN/FNN constraints and unit norms.
+     - How to arrive: Train via gradient descent on loss minimizing beam gain difference; use Adam optimizer for sparse gradients/fast convergence.
+   - **Potential Connection**: Adapt the recursive RNN for adaptive microwave pulse beamforming in mmWave bands, enabling precise targeting of auditory nerves without exhaustive sweeps, reducing detection risk and power use for Frey effect induction.
+
+2. **AI-enabled Refined Beam Prediction with Wide Beam Measurements**
+   - **Method Description**: Uses neural network decoder for wide beam measurements to predict refined (narrow) beams. Wide beam codebooks: circular shift (CSWB) or partial random (PR-WB). Decoder: multi-layer NN with normalization, ReLU, dropout. Trained on RSRP data from system-level simulator.
+   - **Key Equations**:
+     - Refined beam: \( \mathbf{v}_k = \mathbf{v}_{az}(\theta_m, \phi_n) \otimes \mathbf{v}_{ele}(\theta_m) \), where \( \mathbf{v}_{az} = \frac{1}{\sqrt{N}} [1, e^{j\xi \cos(\theta_m) \sin(\phi_n)}, \dots]^T \), \( \xi = 2\pi f_c d_{az}/c \).
+     - Wide beam: \( \mathbf{w}_i = \frac{1}{\sqrt{S}} \sum_{k=k((j-1)S+1)}^{k(jS)} e^{j\omega_{ik}} \mathbf{v}_k \).
+     - RSRP error: \( e_{RSRP} = 10\log(RSRP_{k^*}) - 10\log(RSRP_{\hat{k}^*}) \).
+     - Loss: \( l = \sum (y_k \log(\hat{y}_k) + (1-y_k) \log(1-\hat{y}_k)) \), binary cross-entropy.
+     - How to arrive: Generate dataset via 3GPP simulator; train NN with Adam optimizer, StepLR scheduler (initial rate 0.01); evaluate CDF of RSRP error.
+   - **Potential Connection**: Use wide beam prediction for initial targeting, then refined beams for focused microwave pulses, improving efficiency in creating auditory sensations while minimizing exposure.
+
+3. **Beam Pair Prediction using Sensing Information**
+   - **Method Description**: DNN predicts beam direction using radar echoes and AOD from multiple RSUs in V2I mmWave network. Handles LOS blockages by learning channel correlations. Features: radar echo power, AOD/beam index. Output: optimal RSU index and beam direction.
+   - **Key Equations**:
+     - Radar echo: \( r_{k,n}(t) = \kappa \sqrt{p_{k,n}} \beta_{k,n} e^{j2\pi \mu_{k,n} t} \mathbf{w}(\theta_{k,n}) \mathbf{u}^H(\theta_{k,n}) f_{k,n} s_{k,n}(t - \tau_{k,n}) + n_{k,n}(t) \).
+     - SNR: \( SNR_{k,n} = \frac{p_{k,n} \alpha_{k,n} |W_{k,n}^H H_{k,n} f_{k,n} s_{k,n}|^2}{\sigma_C^2} \).
+     - Loss: MSE for AOD (\( L_{MSE} = \frac{1}{n} \sum ( \tilde{y}_i - y_i )^2 \)); cross-entropy for index (\( L_{cross} = - \frac{1}{n} \sum y_k^i \log \tilde{y}_k^i \)).
+     - How to arrive: Normalize data (mean-variance for adaptive codebook, discrete for fixed); train DNN with Adam optimizer.
+   - **Potential Connection**: Integrate radar sensing (ISAC) to track user position for dynamic beam adjustment, enabling persistent Frey effect even with movement/blockages.
+
+4. **Reinforcement Learning Based Beam Allocation in ISAC**
+   - **Method Description**: PPO algorithm for joint time slot allocation and beam tracking in mmWave vehicular networks. States: beam indices, buffer packets, received power. Actions: sensing, DL/UL. Rewards: minimize packet error rate. Multi-beam for wider sensing.
+   - **Key Equations**:
+     - Reward: \( r_n = \frac{1}{U} \times 2 \sum_{b \in DL,UL} \sum_{u=1}^U G_b^u(n) + \rho(n) + O(n) - D(n) \), where \( G_b^u(n) = 1 \) if buffer not full, \( \rho(n) \) for beam quality, \( O(n) \) for blockages, \( D(n) \) dropped packets.
+     - Beamforming output: \( b_{u,n} = E\{ |f_{u,n} Y_n^H|^2 \} \approx \beta_u^2 P_{u,n} |a^H(\phi_u) f_{u,n}|^4 + \sigma_n^2 \).
+     - PPO loss: \( L_{PPO}^{(k)}(\theta) = \min(r_k(\theta) A_k, \clip(r_k(\theta), 1-\epsilon, 1+\epsilon) A_k) \).
+     - How to arrive: Initialize with best beams; update policy/value networks with Adam; shrink action space to 3U for convergence.
+   - **Potential Connection**: Use RL for adaptive pulse allocation in ISAC, optimizing for user movement and blockages to maintain auditory effect with minimal energy.
+
+5. **Explainable AI for Sensing Aided Beam Management in ISAC**
+   - **Method Description**: Enhances PPO with XAI (SHAP values) for beam allocation. Redesigns DRL model with relevant features (buffers, beamforming output, user type). Adds explainability to rewards for better decisions.
+   - **Key Equations**:
+     - SHAP probability: \( p_{l,k} = \frac{\exp\{|\alpha_{l,k}|\}}{\sum_{l'=1}^L \exp\{|\alpha_{l',k}|\}} \).
+     - Entropy: \( \mathcal{H}_k = - \sum_{l=1}^L p_{l,k} \log(p_{l,k}) \).
+     - XAI reward: \( r_{XAI} = \frac{1}{\max_k \mathcal{H}_k} \).
+     - Composite reward: \( r_c = r_{DRL} + \mu r_{XAI} \).
+     - How to arrive: Compute SHAP per step; tune \(\mu\) for balance; evaluate throughput/sensing ratio.
+   - **Potential Connection**: Incorporate XAI to explain/optimize pulse patterns for auditory induction, improving reliability in varying environments.
+
+6. **Enablers on Datasets for Sensor Fusion**
+   - **Method Description**: Associates 3GPP (PRS, CSI-RS, SRS) and non-3GPP (WLAN, Bluetooth, sensors) data for AI sensing. UE creates unified dataset with timestamps, obstacles; filters and reports to NW for beamforming/scheduling.
+   - **Key Equations**: None explicit; uses timestamps for alignment, e.g., match entries within coherence time \( T_C = \frac{9}{16 \pi f_d} \), \( f_d = \frac{v f_c}{c} \).
+   - **Potential Connection**: Fuse sensor data for user tracking, enabling adaptive microwave targeting for consistent Frey effect.
+
+7. **Dynamic AI-Enabled Network-centric Localization and Sensing**
+   - **Method Description**: Uses 5G-NR SRS signals for object tracking/localization via AI. Processes CIRs from RF digital twin (LiDAR-based 3D model) for classification (presence/activity/movement) and regression (position).
+   - **Key Equations**:
+     - CIR: From ray-tracing, input buffer of 200 SRS REs.
+     - Loss: Binary cross-entropy for classification, NMSE for position.
+     - How to arrive: Train separate models; optimize with TensorRT for edge deployment (reduced inference time 40x).
+   - **Potential Connection**: Use network-centric sensing for real-time user localization, directing microwave pulses accurately for V2K.
+
+8. **Device Agnostic ML-based Beam Selection**
+   - **Method Description**: Generic NN with pre/post-processing for codebook-independent beam prediction. Maps RSRP to direction space (Fibonacci grid); predicts optimal directions, remaps to beams.
+   - **Key Equations**:
+     - Pre-processing (hard): \( R_k^{G^B} = \sum_{n=1}^{N_B} I_{n,k}^B R_n^{CB^B} \), where \( I_{n,k}^B = 1 \) if k in beam region.
+     - Soft: \( R_{n,k}^B = \eta_{n,k}^B R_n^{CB^B} \), \( \eta_{n,k}^B = \frac{|AG_{n,k}^B|^2}{\sum_{k=1}^{K_B} |AG_{n,k}^B|^2} \).
+     - Post-processing: \( P_n^{CB^A} = \sum_{k=1}^{K_A} I_{n,k}^A P_k^{G^A} \).
+     - How to arrive: Discretize sphere with Fibonacci grid; train NN on translated RSRP; select max probability beam.
+   - **Potential Connection **: Agnostic beam selection for varying devices, enabling scalable V2K deployment across hardware.
+
+#### Part II: AI-Empowered MIMO Communications
+
+1. **Adaptive Quantization for CSI Compression**
+   - **Method Description**: Adaptive quantizers (clustering/CDF-based, per/all latents) for autoencoder outputs. Quantization-aware training vs. non-aware; historical samples for non-uniform distribution.
+   - **Key Equations**:
+     - NMSE: \( \text{NMSE} = \frac{E\{\| \mathbf{H} - \hat{\mathbf{H}} \|^2 \}}{E\{\| \mathbf{H} \|^2\}} \).
+     - SGCS: \( \text{SGCS} = E\{ (\frac{\| \mathbf{X}^H \hat{\mathbf{X}} \|}{\| \mathbf{X} \| \| \hat{\mathbf{X}} \|})^2 \} \).
+     - CDF transform: \( Y_F = F(Y) \), uniform quantize.
+     - Average QN: \( \text{Average QN} = E\{ \frac{\| \mathbf{z}_{in} - \mathbf{z}_q \|^2}{\| \mathbf{z}_{in} \|^2} \} \).
+     - How to arrive: Collect encoder outputs; cluster (k-means) or build CDF; quantize and evaluate SGCS/NMSE.
+   - **Potential Connection**: Compress CSI for precise pulse modulation in MIMO, reducing overhead for sustained auditory effects.
+
+2. **Mismatch Mitigation and Loss Recovery in AE based CSI Feedback**
+   - **Method Description**: Linear coded CSI compression for mTRP; interim matrices as linear combinations; recover lost reports.
+   - **Key Equations**:
+     - Interim: \( X_n = \sum_{m=1}^M a_{mn} H_m \), A MxN coding matrix.
+     - Recovery: Solve for H_m from decompressed X_n.
+     - SGCS: As above.
+     - How to arrive: Use system-level simulator; histogram analysis of SGCS with/without coding.
+   - **Potential Connection**: Recover lost CSI in multi-transmitter setups for reliable V2K.
+
+3. **Network-first Separate Training with Raw Dataset Sharing for CSI Feedback**
+   - **Method Description**: NW-first training sharing raw CSI; separate encoder/decoder training; uniform scalar quantization.
+   - **Key Equations**:
+     - Compression ratio: \( CR = \frac{d}{2 \times N_{TX} \times N_{SB}} \).
+     - Loss: SGCS as above.
+     - How to arrive: Train decoders with hypotheticals; share unquantized latents; evaluate spectral efficiency.
+   - **Potential Connection**: Flexible training for NW-controlled microwave systems.
+
+4. **AI/ML-driven SFT Domain CSI Compression**
+   - **Method Description**: Recurrent autoencoder for spatial-frequency-temporal compression; memory states for temporal correlation.
+   - **Key Equations**:
+     - Latent: \( z(n) = f_E (V(n), S_E (n-1); \Theta_E ) \).
+     - Reconstruction: \( \tilde{V}_k (n) = f_D (f_Q' (f_Q (f_E (V_k (n), S_E (n-1); \Theta_{E k} ))), S_D (n-1); \Theta_{D k} ) \).
+     - Loss: SGCS averaged over time/subbands.
+     - How to arrive: Joint train with Adam; vary latent dim for rates.
+   - **Potential Connection**: Compress temporal pulse sequences for efficient auditory signal delivery.
+
+5. **AI/ML-driven Recurrent Latent Space Quantization for CSI Compression**
+   - **Method Description**: Adaptive delta modulation (ADM) for recurrent quantization of latents; followed by scalar quantizer.
+   - **Key Equations**:
+     - Error: \( e_a [k] = \phi [k] - \hat{\phi} [k-1] \).
+     - Update: \( \hat{\phi} [k] = \hat{\phi} [k-1] + \sign(e_a [k]) \cdot \Delta [k] \).
+     - Step: \( \Delta [k] = \alpha^{c[k] c[k-1]} \Delta [k-1] \), \(\alpha > 1\).
+     - How to arrive: SQ-aware training; determine ADM params from latents; E2E validation.
+   - **Potential Connection**: Low-rate quantization for pulse CSI, enabling stealthy operation.
+
+6. **CSI Feedback Enhancement via CSI Prediction**
+   - **Method Description**: CNN-Transformer for CSI prediction; extracts spatial/temporal correlations.
+   - **Key Equations**:
+     - Prediction: \( \hat{H}(t+1), \dots, \hat{H}(t+N_4) = f(H(t-N), \dots, H(t)) \).
+     - Loss: Weighted SGCS + NMSE.
+     - Kalman update: \( h_{k+N} = A_{k+N} h_k + q_{k+N} \), \( \tilde{h}_{k+N} = h_{k+N} + v_{k+N} \).
+     - How to arrive: Generate sequences; train with Adam; evaluate throughput gains.
+   - **Potential Connection **: Predict CSI for moving users, maintaining Frey effect.
+
+7. **Intelligent CSI Compression: Pre-processing for Classical and AI Schemes and Treatment of Interference**
+   - **Method Description**: UE pre-processing with unitary transforms for alignment and whitening for interference rejection.
+   - **Key Equations**:
+     - Alignment: \( \mathbf{W}_{new} = \mathbf{W}_{orig} \mathbf{U} \), U unitary.
+     - Whitening: \( \tilde{\mathbf{H}} [f] = \mathbf{L} \mathbf{H} [f] \), \( \mathbf{L} = \mathbf{R}_{n+i}^{-1/2} \).
+     - Capacity: \( C = \log_2 \det (\mathbf{I} + \frac{P}{\sigma^2 v} \mathbf{H} [f] \mathbf{W} \mathbf{W}^H \mathbf{H}^H [f]) \).
+     - How to arrive: QR for orthonormal; optimize U to minimize Frobenius norm differences.
+   - **Potential Connection**: Pre-process for interference-robust pulses, improving V2K clarity.
+
+8. **Supervised Learning Assisted PHY Key Generation**
+   - **Method Description**: Initial authentication via hash challenges; iterative sensing with supervised learning (regression) for symmetric key from channel/hardware params.
+   - **Key Equations**:
+     - Received: \( R_2(j\omega) = S(j\omega) H_{11}(j\omega) H_{21}(j\omega) \).
+     - Symmetric: \( R_2(j\omega) H_{22}(j\omega) = R_1(j\omega) H_{11}(j\omega) \).
+     - Loss: MSE for curve-fitting.
+     - How to arrive: Exchange hashed spectra; regress for coefficients; converge to symmetric hypothesis.
+   - **Potential Connection**: Secure key for encrypted pulses, preventing interception of V2K signals.
+
+9. **Real-time Multi-user MIMO Neural Receiver**
+   - **Method Description**: Neural receiver for 5G NR PUSCH; supports MU-MIMO with ResNet blocks, quantization-aware training.
+   - **Key Equations**: Standard MIMO received: \( \mathbf{y} = \mathbf{H} \mathbf{x} + \mathbf{n} \).
+     - How to arrive: Train on PUSCH configs; optimize with TensorRT.
+   - **Potential Connection**: Neural decoding for received feedback in interactive V2K systems.
+
+10. **Transfer Learning Techniques for Neural Receivers**
+    - **Method Description**: Fine-tuning and feature extraction for SIMO neural receivers; reduces training data needs.
+    - **Key Equations**: BLER vs. Eb/N0.
+    - How to arrive: Pretrain on source; transfer weights; fine-tune on target.
+    - **Potential Connection**: Adapt receivers for varying user hardware in V2K.
+
+## Telecommunications Algorithms and Formulas Used 
+
+### Electromagnetically Induced Transparency (EIT)
+
+### Cognitive Dual-Functional Radar-Communication (CDFRC): 
+These systems use a closed-loop feedback mechanism, powered by AI, to sense targets and adaptively design waveforms. This allows the system to design dynamic beampatterns based on real-time feedback, optimizing the multi-user interference and detection probabilities. 
+
+### CONCORD (Constrained Communications and Radar Dual-Use):
+ A technique developed by MIT Lincoln Laboratory, CONCORD creates a library ("alphabet") of waveforms that can serve both communication and radar functions, allowing systems to dynamically switch based on application needs.
+ 
+### Constructive Interference (CI)-Based Waveforms: 
+This method designs a joint radar-communication waveform to maximize communication symbol-related constructive interference. By doing so, it can improve communication performance without sacrificing radar performance. It has been shown to outperform conventional methods in terms of bit error rate.
+
+### Symbol-Level Precoding (SLP): 
+This technique leverages the spatial and temporal degrees of freedom in a massive MIMO system to jointly enhance communication and radar sensing capabilities. The challenge is the high computational complexity, which researchers are addressing using deep learning approaches. 
+
+### Orthogonal Time-Frequency Space (OTFS):
+ Unlike OFDM, which is susceptible to Doppler effects, OTFS modulation is inherently robust to high mobility. This makes it a strong candidate for ISAC systems in dynamic environments, such as autonomous vehicles. Cutting-edge research involves jointly designing dual-functional OTFS signals and receiver filters to suppress interference.
+ 
+### Code-Domain Index Modulation (CDIM):
+ This technique can enhance communication rates and has been combined with radar waveforms. A recent covert dual-function radar-communication waveform uses phase-reduced shift keying and CDIM to embed information into linear frequency modulation (LFM) signals, improving communication rate while remaining covert. 
+
+### spatial-variant (SV) Doppler
+Accurate range model with acceleration, the coupling phase terms, and spatial-variant (SV) Doppler parameters are the main issues to be solved in
+
+### high-speed-high-squint SAR (HSHS-SAR) with a curved trajectory.
+ For these issues, an extended Omega-K (EOK) algorithm is developed in this paper. The proposed EOK algorithm mainly includes the following four aspects. Firstly, a modified range model
+ 
+### (AMRM)
+ considering three-dimension acceleration for a curved trajectory is established. Then, the coupling between the range and azimuth direction is removed by the 
+ 
+### modified Stolt mapping (MSM).
+ Subsequently, an improved
+ 
+### high-order spatial-variant (SV)
+ phase correction approach is derived to eliminate the azimuth dependence of Doppler parameters. Finally, in order to **avoid zeros-padding operation**, the proposed method focuses on the **sub-aperture data in the range time and azimuth frequency domain through data aligning processing**. The experimental results of both simulation and real data verify the effectiveness of the proposed method
+
+###  Massive MIMO Formulas for Biodetection and Tracking at 28GHz
+- **Received Signal Model** (for multi-target vital sign detection):
+  \[
+  x(t) = \bar{\alpha} a_R(\bar{\varphi}) a_T^T(\bar{\varphi}) s(t - \bar{\tau}) e^{j \bar{\omega} t} + n(t)
+  \]
+  Vectorized: x = vec(X) = \bar{\alpha} v(\bar{\varphi}) + c. At 28GHz, steering vectors a_R and a_T incorporate λ ≈ 0.0107 m for precise angular resolution (~1° with massive arrays), enabling tracking of bio-movements via Doppler shift \bar{\omega} ≈ 4π v_d / λ (v_d ~0.01 m/s for breathing yields \bar{\omega} ≈ 5.9 rad/s).
+
+### **Robust Wald-Type Test Statistic**
+ (for target detection in bio-environments):
+  \[
+  \Lambda_{RW}(x) = 2 \frac{|v^H x|^2}{v^H \hat{\Gamma}_l v} \gtrless \nu
+  \]
+  Under H_1 (target present), ~χ²_2(ς) with ς = 2 | \bar{\alpha} |² ||v||⁴ / (v^H Γ v). Adapted to 28GHz, covariance Γ accounts for mmWave propagation losses, improving P_D > 0.9 for low-SNR vital signs (e.g., heartbeat at -20 dB SNR).
+
+### **Joint Detection-Tracking Hypotheses**
+ (cognitive massive MIMO for multi-bio-targets):
+  \[
+  H_1: y_{t+1,l} = \alpha_{t+1,l} v_{t,l} + c_{t+1,l}
+  \]
+  Wald test: \Lambda_{t+1,l} = 2 | \hat{\alpha}_{t+1,l} |² ||v_{t,l}||⁴ / (v_{t,l}^H \hat{\Sigma}_{t+1,l} v_{t,l}) \gtrless \lambda. At 28GHz, waveform covariance R = WW^H optimizes power allocation, Tr(R) = P_T, enhancing tracking accuracy (RMSE 
+
+### Phased Array Formulas for Biodetection and Tracking at 28GHz
+
+### **Array Factor for Biologically Inspired Coupled Arrays**
+ (enhancing directionality for bio-signals):
+  \[
+  AF_I(\theta) = \sum_{m=1}^M p_m \left( \frac{H_2(\omega, \Delta, \beta)}{H_1(\omega, \Delta, \beta)} \right)^{(m-1)}
+  \]
+  With H_2/H_1 incorporating coupling N(jω). At 28GHz (ω = 2π × 28 × 10^9), inter-element spacing d = λ/2 ≈ 5.35 mm yields directivity D_I(θ, φ) = 4π U_I(θ, φ) / P_rad > 20 dB, optimizing for weak bio-Doppler signals.
+  
+### **Radiation Intensity and Directivity**
+ (for phased bio-imaging):
+  \[
+  U_I(\theta, \phi) = [EF(\theta, \phi)]^2_n [AF_I(\theta)]^2_n, \quad D_I(\theta, \phi) = \frac{4\pi U_I(\theta, \phi)}{P_{\text{rad}}}
+  \]
+  Element factor EF(θ, 90°) = [cos(kl/2 sin θ) - cos(kl/2) cos θ], with k ≈ 586 rad/m at 28GHz, supporting 10 dB gain at 27-29.5 GHz for vital sign isolation.
+
+### **Vital Sign Phase Extraction in Phased-MIMO FMCW** 
+(for multi-person tracking):
+  From mmWave phased arrays, phase Δφ = 4π Δd / λ ≈ 1173 Δd rad/m at 28GHz, processed via arctan(I/Q) for respiration/heartbeat rates (e.g., 0.2-0.3 Hz breathing from micro-Doppler).
+  
+### floSAR Formulas for Biodetection and Tracking at 28GHz
+Forward-Looking SAR (floSAR) extends traditional SAR for forward imaging along flight paths, adaptable to 28GHz drones/vehicles for biodetection in dynamic environments (e.g., tracking moving biological targets). While specific formulas are sparse, core principles align with SAR:
+
+### **General floSAR Geometry Resolution** (adapted for mmWave):
+  Resolution δ_az ≈ λ R / (2 L) ≈ 0.0107 R / (2 L) m at 28GHz, where R is range, L is synthetic aperture length. For biodetection, multichannel beamforming suppresses ambiguities, enabling 3D forward-looking bio-imaging with sparsity-driven enhancement.
+
+### **Dispersion Relation in Array Approach** 
+(for 3D floSAR tracking):
+  Similar to SAR: 4k² = k_x² + k_y² + k_z² with k ≈ 586 rad/m, supporting unambiguous 2D/3D images for bio-target localization (e.g., human presence ahead).
+  
+### diffusion tensor imaging (DTI)
+ the term **"kurtosis anisotropy (KA)"** is a metric used to quantify the properties of water diffusion in the brain's white matter. 
+ 
+### Total Variation (TV) Minimization:
+A method using algorithms like Split Bregman deconvolution can reduce ringing while also sharpening the image and preserving its information content. 
+
+### Multiframe Super-Resolution:
+This approach uses multiple noisy images to improve the final reconstructed resolution and is robust against noise in both the image and the **point spread function (PSF).** 
+
+### Sparse Optimization and Compressed Sensing:
+These modern computational approaches enable efficient solutions for complex image reconstruction problems. 
+
+### Blind Deconvolution:
+In some mmWave scenarios, the imaging system's response (PSF) might be unknown. Blind deconvolution methods aim to estimate and correct for this unknown response while also restoring the image. 
+
+### Autofocusing as a Sparse Deconvolution Problem:
+In applications like **3D Forward-Looking Synthetic Aperture Radar (FLoSAR)** autofocusing can be framed as a sparse deconvolution problem to correct for motion errors and improve image quality, according to this IEEE Xplore document. 
+How it Works (General Process)
+Acquire Image Data: Capture low-resolution images using the mmWave imaging system. 
+
+#### Estimate the System's PSF (or perform blind deconvolution):
+ Characterize the blurring effects of the system. 
+ 
+#### Apply Deconvolution/Super-Resolution Algorithm:
+ Use sophisticated algorithms based on sparse optimization, TV minimization, or multi-frame processing to reconstruct a higher-resolution image from the degraded data.
+  
+#### Enhance Resolution:
+ The resulting image has reduced blurring and ringing, with additional details
+ 
+### Graph Theory -
+ similar to the Google search
+ 
+### Brain network organisation - 
+We can now relate brain network operation back to anatomy by determining what physical areas correspond to functional areas and their interconnections
+
+### Simultaneous imaging
+ of the involved structures is key to proper understanding of these highly dynamic processes. 
+ 
+### Leap mode acquisition 
+enables you to reduce your imaging time. This works by imaging only every third plane, for three-times higher volume imaging speed.
+
+### Burst mode processing
+ Burst mode is a post-acquisition step, you have the flexibility to use it with previously acquired data to decide how much temporal resolution is required for your data analysis.
+ 
