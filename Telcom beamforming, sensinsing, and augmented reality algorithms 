@@ -289,3 +289,190 @@ enables you to reduce your imaging time. This works by imaging only every third 
 ### Burst mode processing
  Burst mode is a post-acquisition step, you have the flexibility to use it with previously acquired data to decide how much temporal resolution is required for your data analysis.
  
+## Electromagnetically Induced Transparency (EIT)
+## Cognitive Dual-Functional Radar-Communication (CDFRC): 
+These systems use a closed-loop feedback mechanism, powered by AI, to sense targets and adaptively design waveforms. This allows the system to design dynamic beampatterns based on real-time feedback, optimizing the multi-user interference and detection probabilities. 
+
+## CONCORD (Constrained Communications and Radar Dual-Use):
+ A technique developed by MIT Lincoln Laboratory, CONCORD creates a library ("alphabet") of waveforms that can serve both communication and radar functions, allowing systems to dynamically switch based on application needs.
+## Constructive Interference (CI)-Based Waveforms: 
+This method designs a joint radar-communication waveform to maximize communication symbol-related constructive interference. By doing so, it can improve communication performance without sacrificing radar performance. It has been shown to outperform conventional methods in terms of bit error rate.
+## Symbol-Level Precoding (SLP): 
+This technique leverages the spatial and temporal degrees of freedom in a massive MIMO system to jointly enhance communication and radar sensing capabilities. The challenge is the high computational complexity, which researchers are addressing using deep learning approaches. 
+
+## Orthogonal Time-Frequency Space (OTFS):
+ Unlike OFDM, which is susceptible to Doppler effects, OTFS modulation is inherently robust to high mobility. This makes it a strong candidate for ISAC systems in dynamic environments, such as autonomous vehicles. Cutting-edge research involves jointly designing dual-functional OTFS signals and receiver filters to suppress interference.
+## Code-Domain Index Modulation (CDIM):
+ This technique can enhance communication rates and has been combined with radar waveforms. A recent covert dual-function radar-communication waveform uses phase-reduced shift keying and CDIM to embed information into linear frequency modulation (LFM) signals, improving communication rate while remaining covert. 
+
+## spatial-variant (SV) Doppler
+Accurate range model with acceleration, the coupling phase terms, and spatial-variant (SV) Doppler parameters are the main issues to be solved in
+## high-speed-high-squint SAR (HSHS-SAR) with a curved trajectory.
+ For these issues, an extended Omega-K (EOK) algorithm is developed in this paper. The proposed EOK algorithm mainly includes the following four aspects. Firstly, a modified range model
+## (AMRM)
+ considering three-dimension acceleration for a curved trajectory is established. Then, the coupling between the range and azimuth direction is removed by the 
+ 
+## modified Stolt mapping (MSM).
+ Subsequently, an improved
+## high-order spatial-variant (SV)
+ phase correction approach is derived to eliminate the azimuth dependence of Doppler parameters. Finally, in order to **avoid zeros-padding operation**, the proposed method focuses on the **sub-aperture data in the range time and azimuth frequency domain through data aligning processing**. The experimental results of both simulation and real data verify the effectiveness of the proposed method
+## orbital angular momentum beam multiplexing with super-heterodyne opposing pulse trains
+The opposing pulse trains create standing wave interference patterns that are exquisitely sensitive to tissue dielectric changes from neural activity.
+## Neural Pattern Discrimination:Spike detection:
+
+## Sharp OAM phase gradients from rapid neural activity Perfusion flow:
+## Doppler-shifted OAM modes from blood movement Startle responses:
+## Sudden OAM mode switches from emotional activation Language processing:
+## Complex OAM interference patterns from distributed cortical activity
+## Blood Flow Monitoring: 
+The absorption and heating effects of mmWaves can be used to monitor blood flow non-invasively. A controlled amount of mmWave energy heats the skin, and the rate at which the skin cools is related to the blood flow, which carries heat away from the area. 
+
+## dipole imaging
+## Chirped-pulse Fourier transform (CP-FT) spectroscopy:
+ This technique rapidly sweeps a broadband linear frequency across a gas sample.
+How it works: A short, broadband millimeter-wave pulse polarizes the gas sample, causing it to emit a
+## free induction decay (FID) signal.
+ The FID is then Fourier transformed to produce a broadband frequency spectrum.
+Advantages: It offers significantly faster spectral acquisition speeds (tens of GHz in microseconds) compared to traditional stepped-frequency methods, which can take several seconds per scan point.
+## Direct digital synthesis (DDS) with frequency multiplication:
+ This approach uses a highly stable DDS signal, up-converted into the mmWave band.
+How it works: The DDS source functions as both a fast, switchable radiation source and a local oscillator for a sensitive heterodyne receiver. This setup allows for rapid frequency changes and long-term data averaging to enhance sensitivity.
+## Fast Fourier Transform (FFT) processing: 
+Advanced systems can use direct digitization of mmWave signals and FFT to achieve high temporal resolution and near real-time data processing.
+Advantages: This provides high-resolution spectra at high speeds, with tested rates of up to 200,000 spectra per second, making it suitable for analyzing dynamic phenomena
+
+## Fast Sweep Direct Absorption 
+## Key technologies for fast functional mmWave imaging
+By leveraging principles like synthetic aperture radar (SAR), mmWave imaging can capture high-resolution images of concealed objects or materials in motion.
+## spatial-variant (SV) Doppler
+Accurate range model with acceleration, the coupling phase terms, and spatial-variant (SV) Doppler parameters are the main issues to be solved in
+## high-speed-high-squint SAR (HSHS-SAR) with a curved trajectory.
+ For these issues, an extended Omega-K (EOK) algorithm is developed in this paper. The proposed EOK algorithm mainly includes the following four aspects. Firstly, a modified range model
+## (AMRM)
+ considering three-dimension acceleration for a curved trajectory is established. Then, the coupling between the range and azimuth direction is removed by the 
+ 
+## Shared Signal Processing:
+ A central processing unit would handle both communication signal encoding/decoding and radar image reconstruction algorithms. It would manage resources, schedule time slots for communication vs. sensing, and adapt the system's focus based on the task.
+## Dual-Function Waveforms: 
+Advanced research is focused on developing "dual-function" waveforms that carry both communication data and sensing information. These waveforms are optimized for both high data rate and accurate parameter estimation.
+## Joint Optimization:
+ The system could intelligently adapt its behavior. For example, sensing data could be used to predict channel conditions and optimize communication beamforming. Conversely, communication data could include information about the system's movement to assist with SAR image reconstruction. 
+
+
+## modified Stolt mapping (MSM).
+ Subsequently, an improved
+## high-order spatial-variant (SV)
+ phase correction approach is derived to eliminate the azimuth dependence of Doppler parameters. Finally, in order to **avoid zeros-padding operation**, the proposed method focuses on the **sub-aperture data in the range time and azimuth frequency domain through data aligning processing**. The experimental results of both simulation and real data verify the effectiveness of the proposed method.
+
+## Alternating Direction Method of Multipliers (ADMM) and Scattered Power Mapping (SPM), are crucial for fast data processing.
+How it works: These algorithms reconstruct 3D images from sparsely sampled data, avoiding complex matrix inversions and significantly reducing computational time. 
+## Three-dimensional (3-D) millimeter-wave (mm-Wave) Forward-Looking Synthetic Aperture Radar (FLoSAR) 
+has emerged as a promising technology for applications such as self-landing, navigation, and collision-avoidance in a deteriorated vision environment. The FLoSAR images targets when the radar platform is moving in the forward direction. The advantage of operating at mm-Wave comes from potentially exploiting its unlicensed, wide bandwidth for high-resolution imaging. Simultaneously, high angular resolution is difficult to achieve in **FLoSAR** because objects located symmetrically along the flight direction have the same range and Doppler history. Additionally, at mmWave, GPS accuracy is insufficient to obtain platform position at subwavelength level leading to challenges in providing motion compensation in the reconstructed images. In this work, we investigate the autofocusing by modeling it as a **sparse deconvolution problem**. The radar measurements correspond to a convolution of unknown radar image with an impulse function that has unknown focusing errors. In particular, we exploit the sparse nature of the target scenario and compare the results with the **phase gradient autofocus method**.
+### Superfast Split Bregman Algorithm (SFSBA) 
+Rapidly solves the regularization problems involved in improving azimuth resolution for forward-looking radar. 
+
+
+### Minimum Variance Method (MVM) and MUSIC (Multiple Signal Classification)
+ can provide super-resolution by estimating signal properties more precisely than conventional Fourier-based methods, though they are computationally intensive.
+ results. 
+### Deep Learning (DL)
+ DL has emerged as a powerful tool for super-resolution across many domains, including microwave imaging.
+### Convolutional Neural Network (CNN) 
+is trained on a dataset of low-resolution (LR) and high-resolution (HR) image pairs. The network learns the mapping from LR to HR, allowing it to generate super-resolved images from new LR inputs.
+### SR enhancement:
+ This data-driven approach can be used to improve the output of conventional SAR or other microwave imaging techniques, effectively boosting resolution in a variety of imaging dimensions. 
+### Near-field enhancement
+ This technique exploits the non-propagating evanescent waves that exist close to an object's surface. These waves contain high-frequency information that is lost in the far-field due to the diffraction limit.
+### Method: 
+For K-band imaging, this involves placing a receiver array or scanning probe very close to the object. Novel approaches use metasurfaces or structured illumination to convert evanescent waves into propagating ones that can be detected in the far-field.
+## SR enhancement:
+ By capturing this higher-frequency information, near-field methods can bypass the diffraction limit to achieve sub-wavelength resolution.
+### Time-domain and spectral processing
+ Some methods exploit the signal's bandwidth in the time or frequency domains to enhance resolution.
+### Zero-Padding Pseudo-Pulse Algorithm (ZPPA) 
+use computational manipulation of spectral data to improve range (depth) resolution. By extending the frequency spectrum with zero-padding before an inverse Fourier transform, finer details can be resolved in the time domain.
+### SR enhancement:
+ Broadband signals offer more information, and techniques that effectively process this information, like **ZPPA** or spectral shifting, can yield super-resolution beyond the limits of monochromatic imaging.
+
+
+
+ 
+## Super-resolution techniques are explicitly designed to overcome this barrier.
+\(\text{Resolution}\approx \frac{\lambda }{2}\) 
+## Super-resolution from frequency mixing (Structured Illumination) 
+While originally an optical microscopy technique, the concept of frequency mixing through structured illumination can be adapted to microwave imaging. The technique encodes high-frequency information into the observable frequency space by using a **structured illumination pattern**. 
+## Formula: 
+The observed emission's Fourier transform () includes components that depend non-locally on the object's distribution ().
+## Structured illumination, the relationship is:
+where  is the illumination pattern's frequency, \(I_{0}\) is the illumination intensity, and \(\phi \) is the phase. By solving for the components of \(\~{D}\), a super-resolved image can be reconstructed. 
+
+### Common formula for total variation (TV) regularization is:
+\(\min _{u}\left(\frac{1}{2}\|Au-y\|_{2}^{2}+\lambda \|u\|_{TV}\right)\)where \(u\) is the image to be reconstructed, \(A\) is the measurement matrix, \(y\) is the measured data, and \(\lambda \) is a regularization parameter.
+# K-band Self-supervised MRI Reconstruction: 
+ While primarily an MRI technique, the "k-band" approach highlights a self-supervised learning strategy applicable to other imaging modalities. The method uses limited k-space (frequency space) data to train a deep learning network.
+# Method: 
+By stochastically sampling different limited-resolution bands in k-space, the network learns to fill in the missing high-frequency information without needing external high-resolution data.
+## Formula:
+ This technique utilizes a weighted loss function, where the mask is designed to facilitate the reconstruction of high-resolution details. 
+Quantum imaging techniques in the K-band This method, demonstrated for terahertz frequencies, could theoretically be applied to the K-band and involves creating entangled photon pairs through a process called 
+# **spontaneous parametric down-conversion (SPDC)**
+## Preparation: 
+A high-energy pump photon (e.g., visible light) is directed into a nonlinear crystal.
+## Entanglement: 
+The crystal produces two entangled, lower-energy photons: a visible-light signal photon and an infrared idler photon in the K-band.
+## Interaction:
+ The idler photon is sent to probe an object, but is never directly detected.Interference: The idler photon is then recombined with a second, indistinguishable idler photon from a separate crystal in an interferometer setup (a Zou–Wang–Mandel interferometer).
+## Detection: 
+A standard camera, which is sensitive only to visible light, detects the signal photons. The interference pattern of the idler photons—which carries amplitude and phase information about the object—is transferred to the signal photons through quantum coherence.
+## Reconstruction:
+ The final K-band image is reconstructed by analyzing the amplitude and phase of the detected signal photons. This method is particularly valuable for imaging in spectral regions where detectors are inefficient, expensive, or require cryogenic cooling. Formulas and theoretical concepts The theoretical foundation for K-band quantum imaging is rooted in the principles of quantum optics and quantum metrology. 
+# Spontaneous parametric down-conversion (SPDC):
+ The process of generating entangled photon pairs is governed by conservation of energy and momentum: 
+# Energy conservation:
+ The energy of the pump photon (\(E_{p}\)) must equal the sum of the signal (\(E_{s}\)) and idler (\(E_{i}\)) photon energies.\(E_{p}=E_{s}+E_{i}\) or \(\hbar \omega _{p}=\hbar \omega _{s}+\hbar \omega _{i}\)Momentum conservation
+
+# (Phase-matching):
+ The momentum vector of the pump photon (\(\vec{k}_{p}\)) must equal the sum of the signal (\(\vec{k}_{s}\)) and idler (\(\vec{k}_{i}\)) momentum vectors.\(\vec{k}_{p}=\vec{k}_{s}+\vec{k}_{i}\) 
+# Quantum coherence in interferometry:
+ The effect of induced coherence in QIUP, where information from the undetected idler is encoded onto the signal, is a key quantum phenomenon. 
+# Two-photon state: 
+The quantum state of the entangled photon pair can be described by a two-photon wavefunction, \(\Psi (\vec{r}_{s},\vec{r}_{i})\), which represents the spatial correlation between the signal and idler photons.Hamiltonian: The interaction of the pump with the nonlinear crystal is described by an interaction Hamiltonian, \(\^{H}_{int}\), which governs the creation of the signal and idler photons. 
+# Quantum Fisher Information (QFI): 
+To quantify the precision of quantum imaging techniques, researchers use tools from quantum metrology, such as the Quantum Fisher Information (QFI). 
+# Parameter estimation:
+ For an unknown parameter \(\lambda \) (e.g., related to the object's properties), the QFI (\(F_{Q}\)) sets the ultimate precision limit of the estimation.
+# Quantum Cramer-Rao bound (QCRB):
+ The variance (\(\Delta \lambda ^{2}\)) of any unbiased estimator for the parameter is bounded by the QFI.\(\Delta \lambda ^{2}\ge \frac{1}{\nu F_{Q}(\lambda )}\)Here, \(\nu \) is the number of independent measurements.
+# The Heisenberg limit:
+ is a scaling proportional to \(1/\nu ^{2}\), which can sometimes be achieved by leveraging quantum states, whereas the standard quantum limit 
+# Monostatic radar equation:
+\(\) P_r = \frac{P_t G^2 \lambda^2 \sigma}{(4\pi)^3 R^4} \(\)where \(P_{t}\) is the transmitted power, \(G\) is the antenna gain, \(\lambda \) is the wavelength, \(\sigma \) is the radar cross-section of the target, and \(R\) is the distance to the target. This formula is critical for understanding the signal strength and designing sensitive imaging systems. (PDF) Towards
+# Advanced Block Focused Omega-K (BF-$\omega$k): 
+Cutting-edge algorithms that improves upon the conventional Block Focused Omega-K algorithm, which is a fast backprojection method used in SAR imaging. The BF-$\omega$k version partitions data to simplify complex matrix operations and adds a novel focusing step to improve signal strength at low signal-to-noise ratios (SNR).
+
+## Light sheet imaging
+## Lattice SIM illumination
+
+## Graph Theory 
+
+## diffusion tensor imaging (DTI)
+
+## Multiframe Super-Resolution
+
+## **Beat Signal in Wavenumber Domain** 
+
+## **Backscattered Data in Effective Monostatic Form**
+
+## **pth-Order Continuous FrFT**
+
+## **Radiation Intensity and Directivity**
+
+## **Vital Sign Phase Extraction in Phased-MIMO FMCW** 
+
+## **Dispersion Relation in Array Approach** 
+
+## **Array Factor for Biologically Inspired Coupled Arrays**
+
+## **Joint Detection-Tracking Hypotheses**
+
+## **Robust Wald-Type Test Statistic**
