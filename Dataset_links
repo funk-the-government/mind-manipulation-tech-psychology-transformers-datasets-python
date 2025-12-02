@@ -1,0 +1,91 @@
+DATASETS FROM PUBLIC DATASETS COLLECTION USED TO TRAIN AI MODELS FOR INFERENCE OF NEUROLOGICAL DATA FROM TELCOM COMMUNICATIONS
+
+### 1. Bioimaging and Biology
+
+1. Broad Bioimage Benchmark Collection (BBBC)
+  · URL: https://bbbc.broadinstitute.org/
+  · Description: A collection of annotated biological image sets for validating microscopy image analysis algorithms. It includes multiple datasets (e.g., BBBC001, BBBC005, BBBC022, BBBC036, BBBC047) with ground truth data for tasks like segmentation and phenotype classification .
+  
+2. Fluorescent Neuronal Cells
+   · URL: https://bbbc.broadinstitute.org/ (search for neuronal datasets)
+   · Description: Part of BBBC, containing fluorescence microscopy images of neuronal cells for quantitative analysis.
+3. Global Biotic Interactions
+   · URL: https://globalbioticinteractions.org/
+   · Description: An open service providing data on species interactions (e.g., predation, pollination) from various sources .
+4. Neuroelectro
+   · URL: https://neuroelectro.org/ (not in search results; alternative resource)
+   · Description: A repository for electrophysiological properties of neurons.
+5. Neuromorpho
+   · URL: https://neuromorpho.org/ (not in search results; alternative resource)
+   · Description: A database of neuronal morphologies for computational neuroscience.
+
+---
+
+### 2. Neuroscience and Connectomics
+
+1. Human Connectome Project (ConnectomeDB)
+  · URL: https://db.humanconnectome.org/
+  · Description: A repository for detailed human brain mapping data. Note: The legacy ConnectomeDB system is being phased out. Updated HCP data is available on "ConnectomeDB powered by BALSA," and lifespan data is available from the NIMH Data Archive (NDA) .
+
+### 3. 5G, 6G, and Wireless Communication Datasets
+
+1. DeepSense 6G
+  · URL: https://deepsense6g.net/
+  · Description: A multi-modal dataset for sensing-aided communication .
+2. DeepMIMO
+  · URL: https://deepmimo.net/
+  · Description: A framework for generating massive MIMO channel data .
+3. IEEE Dataport for 5G/6G
+  · URL: https://ieee-dataport.org/
+  · Description: A repository that often hosts telecommunications datasets. Search for "5G", "6G", "testbed" .
+
+### 4. Github datasets remote sensing and connectomics
+
+git clone https://huggingface.co/datasets/MMWorld/MMWorld
+
+git clone https://huggingface.co/datasets/yysd123/indoor_mmwave
+
+git clone https://huggingface.co/datasets/hongxi/eit_ct
+
+git clone https://huggingface.co/datasets/qsimeon/celegans_connectome_data
+
+git clone https://huggingface.co/datasets/eit-1m/EIT-1M
+
+git clone https://huggingface.co/datasets/yushiran/fnirs_fmri_stroop
+
+git clone https://huggingface.co/datasets/marstin/4D-LRM-Stuff
+
+git clone https://huggingface.co/datasets/calabi-yau-data/polytopes-4d
+
+git clone https://huggingface.co/datasets/4daJ/ICDAR-2024-SAM_Track_1
+
+git clone https://huggingface.co/datasets/qsimeon/celegans_connectome_data
+
+git clone https://huggingface.co/datasets/martinschobben/microwave-remote-sensing
+
+git clone https://huggingface.co/datasets/gremlin97/RemoteSensingCorpus
+
+git clone https://huggingface.co/datasets/WaltonFuture/remote-sensing-VQA
+
+git clone https://huggingface.co/datasets/Mercyiris/remote-sensing-change-detection
+
+
+### trainers
+git clone https://huggingface.co/AutonLab/MOMENT-1-base
+
+git clone https://huggingface.co/autogluon/mitra-regressor
+
+git clone https://huggingface.co/autogluon/chronos-bolt-base
+
+git clone https://huggingface.co/BlackDev/training-093
+
+git clone https://huggingface.co/vitaliidev/distributed-training
+
+git clone https://huggingface.co/b-diarization/repo_name
+
+git clone mmod_human_face_detector.dat.bz2 "http://dlib.net/files/mmod_human_face_detector.dat.bz2"
+
+git clone "$MODELS_DIR/RRDB_ESRGAN_x4.pth" "https://github.com/xinntao/ESRGAN/releases/download/v0.0.0/RRDB_ESRGAN_x4.pth"
+
+git clone "$MODELS_DIR/RealESRGAN_x4plus.pth" "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth"
+
